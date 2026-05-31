@@ -1,0 +1,629 @@
+/* ==========================================================================
+   CSS INDUSTRI OBS / GRAFANA - RADIOBOSS FRESH RESET MANAGER
+   Gaya: Dark Gray Minimalis, Border Solid Bersih, Nyaman di Mata Operator
+   ========================================================================== */
+
+/* 1. Root & Skema Warna Fungsional */
+:root {
+    --bg-dark: #121214;               /* OBS Charcoal Dark */
+    --bg-card: #1c1c1f;               /* VS Code Dark Gray */
+    --bg-sidebar: #161619;            /* Sidebar Darker Gray */
+    --border-solid: #2e2e33;          /* Panel Solid Border */
+    --border-hover: #3e3e46;
+    
+    --text-primary: #e2e8f0;          /* Off-white */
+    --text-muted: #94a3b8;            /* Cool Gray */
+    --text-dark: #0f172a;
+    
+    /* Warna Status Industri (Tegas, Tanpa Glow Efek) */
+    --primary: #6366f1;               /* Solid Indigo */
+    --primary-hover: #4f46e5;
+    --accent: #0ea5e9;                /* Electric Blue */
+    --accent-hover: #0284c7;
+    --success: #10b981;               /* Emerald Green */
+    --success-hover: #059669;
+    --warning: #f59e0b;               /* Amber Gold */
+    --danger: #ef4444;                /* Crimson Red */
+    
+    --transition-fast: all 0.2s ease;
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* 2. Reset & Layout Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* 3. Desain Sidebar Industri */
+.sidebar {
+    width: 260px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-solid);
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    font-size: 1.75rem;
+    color: var(--accent);
+}
+
+.logo-text h1 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.logo-text span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+    border: 1px solid transparent;
+}
+
+.menu-item i {
+    font-size: 1rem;
+    width: 18px;
+    text-align: center;
+}
+
+.menu-item:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.menu-item.active {
+    color: var(--text-primary);
+    background: #232329;
+    border-color: var(--border-solid);
+}
+
+.menu-item.active i {
+    color: var(--accent);
+}
+
+.sidebar-footer {
+    border-top: 1px solid var(--border-solid);
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.status-badge-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.status-dot.green {
+    background-color: var(--success);
+}
+
+.version {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* 4. Konten Utama & Header */
+.main-content {
+    margin-left: 260px;
+    flex-grow: 1;
+    padding: 30px;
+    background-color: var(--bg-dark);
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-solid);
+    padding-bottom: 15px;
+}
+
+.header-title h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.header-title p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.readiness-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.readiness-badge.dangerous {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.readiness-badge.ready {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* 5. Asinkron Task Banner (Universal Worker Status) */
+.async-task-banner {
+    background: #1e1e24;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.task-banner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.spinner-icon {
+    color: var(--primary);
+}
+
+#task-banner-percentage {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+#task-banner-message {
+    font-size: 0.8rem;
+    margin-top: 8px;
+}
+
+/* 6. Kartu Statistik (Solid & Rapi) */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-solid);
+    padding: 20px;
+    border-radius: 8px;
+    transition: var(--transition-fast);
+}
+
+.stat-card:hover {
+    border-color: var(--border-hover);
+}
+
+.stat-icon {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.text-accent { color: var(--accent); }
+.text-blue { color: var(--primary); }
+.text-warning { color: var(--warning); }
+.text-danger { color: var(--danger); }
+
+.stat-value {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* 7. Dashboard Layout & Panel Buttons */
+.dashboard-details-grid {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 20px;
+}
+
+.dashboard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-solid);
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.dashboard-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.actions-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn {
+    font-family: var(--font-body);
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.btn-large {
+    padding: 14px 24px;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--text-primary);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    border: 1px solid var(--border-solid);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-accent {
+    background: var(--accent);
+    color: var(--text-dark);
+}
+
+.btn-accent:hover {
+    background: var(--accent-hover);
+}
+
+.btn-success {
+    background: var(--success);
+    color: var(--text-dark);
+}
+
+.btn-success:hover {
+    background: var(--success-hover);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: var(--text-primary);
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+/* Detail Risiko */
+.risk-metrics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.risk-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.01);
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-solid);
+}
+
+.risk-label {
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+/* 8. Tab Panel & Animations */
+.tab-pane {
+    display: none;
+    animation: quickFade 0.2s ease-out forwards;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+@keyframes quickFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 9. Tabel Data Fungsional */
+.page-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-solid);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 15px;
+    border: 1px solid var(--border-solid);
+    border-radius: 6px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-solid);
+}
+
+.data-table th {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--text-muted);
+    background: #161619;
+}
+
+.data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+/* Badges */
+.badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.badge.ready { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+.badge.review { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.badge.dangerous { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+.badge.archive { background: rgba(255, 255, 255, 0.08); color: var(--text-muted); }
+
+/* Scan Inputs & Progress */
+.scan-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.scan-input-group input, .settings-form input {
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-solid);
+    padding: 12px 18px;
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.scan-input-group input:focus, .settings-form input:focus {
+    border-color: var(--accent);
+}
+
+.progress-bar-container {
+    background: rgba(255, 255, 255, 0.05);
+    height: 6px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Migration page */
+.migration-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.control-box {
+    background: rgba(255, 255, 255, 0.005);
+    border: 1px solid var(--border-solid);
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.control-box h4 {
+    font-family: var(--font-heading);
+}
+
+/* Reports Grid */
+.reports-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.report-file-item {
+    background: rgba(255, 255, 255, 0.005);
+    border: 1px solid var(--border-solid);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--transition-fast);
+}
+
+.report-file-item:hover {
+    border-color: var(--accent);
+}
+
+.report-file-item i {
+    font-size: 1.75rem;
+}
+
+.csv-icon { color: var(--success); }
+.md-icon { color: var(--accent); }
+
+.file-info strong {
+    display: block;
+    font-size: 0.88rem;
+    margin-bottom: 2px;
+}
+
+.file-info span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Settings Form */
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-solid);
+    padding: 14px 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: var(--transition-fast);
+}
+
+.toast.hidden {
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
+}
+
+.toast i {
+    color: var(--accent);
+}
+
+/* Helpers */
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.hidden { display: none !important; }
+.gap-15 { gap: 15px; }
+.font-bold { font-weight: 700; }

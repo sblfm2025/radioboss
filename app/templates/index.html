@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RadioBOSS Fresh Reset Manager</title>
+    <!-- Google Fonts Outfit & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom OBS Industrial CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-radio logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Radio SBL 92.4</h1>
+                    <span>Fresh Reset Manager</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i><span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="scanner">
+                    <i class="fa-solid fa-folder-tree"></i><span>Drive Scan</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="playlists">
+                    <i class="fa-solid fa-list-music"></i><span>Playlist Audit</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="scheduler">
+                    <i class="fa-solid fa-clock"></i><span>Scheduler Audit</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="cartwall">
+                    <i class="fa-solid fa-table-cells-large"></i><span>Cart Wall Planner</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="migration">
+                    <i class="fa-solid fa-copy"></i><span>Folder & Copier</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="reports">
+                    <i class="fa-solid fa-file-waveform"></i><span>Reports & Logs</span>
+                </a>
+                <a href="#" class="menu-item" data-tab="settings">
+                    <i class="fa-solid fa-sliders"></i><span>Settings</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="status-badge-container">
+                    <span class="status-dot green"></span>
+                    <span class="status-text">Server: Aktif</span>
+                </div>
+                <small class="version">Production-Grade v2.0</small>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Universal Async Background Task Status Banner -->
+            <div id="async-task-banner" class="async-task-banner hidden">
+                <div class="task-banner-header">
+                    <div class="task-info">
+                        <i class="fa-solid fa-arrows-spin fa-spin spinner-icon"></i>
+                        <strong id="task-banner-name">Tugas Latar Belakang</strong>
+                    </div>
+                    <span id="task-banner-percentage">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="task-banner-progress-bar" class="progress-bar" style="width: 0%"></div>
+                </div>
+                <p id="task-banner-message" class="text-muted">Sedang diproses di latar belakang...</p>
+            </div>
+
+            <header class="main-header">
+                <div class="header-title">
+                    <h2 id="current-tab-title">Dashboard Utama</h2>
+                    <p id="current-tab-subtitle">Pantau kesehatan pustaka siaran dan status kelayakan on-air Radio SBL.</p>
+                </div>
+                <div class="header-actions">
+                    <div id="readiness-indicator" class="readiness-badge dangerous">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>SIARAN BELUM STERIL</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- ================= TAB: DASHBOARD ================= -->
+                <section id="tab-dashboard" class="tab-pane active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-music text-accent"></i></div>
+                            <div class="stat-value" id="stat-total-files">0</div>
+                            <div class="stat-label">Total Aset Musik</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-list-check text-blue"></i></div>
+                            <div class="stat-value" id="stat-total-playlists">0</div>
+                            <div class="stat-label">Playlist Lama</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-triangle-exclamation text-warning"></i></div>
+                            <div class="stat-value" id="stat-broken-playlists">0</div>
+                            <div class="stat-label">Playlist Rusak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-link-slash text-danger"></i></div>
+                            <div class="stat-value" id="stat-missing-paths">0</div>
+                            <div class="stat-label">Path Hilang (Error 2)</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-details-grid">
+                        <div class="dashboard-card main-actions-card">
+                            <h3><i class="fa-solid fa-bolt text-accent"></i> Aksi Cepat Maintenance</h3>
+                            <p class="card-desc">Jalankan urutan reset secara berurutan untuk menjamin keselamatan materi.</p>
+                            <div class="actions-button-group">
+                                <button class="btn btn-primary btn-large" onclick="triggerScan()"><i class="fa-solid fa-play"></i> 1. Pindai Audio & Audit (Asinkron)</button>
+                                <button class="btn btn-secondary btn-large" onclick="triggerBuildStructure()"><i class="fa-solid fa-folder-plus"></i> 2. Bangun Folder Steril</button>
+                                <button class="btn btn-accent btn-large" onclick="triggerCopyFiles()"><i class="fa-solid fa-copy"></i> 3. Salin Aset Approved (Asinkron)</button>
+                                <button class="btn btn-success btn-large" onclick="triggerBuildPlaylists()"><i class="fa-solid fa-wand-magic-sparkles"></i> 4. Susun Playlist & Plan</button>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card risk-warning-card">
+                            <h3><i class="fa-solid fa-shield-halved text-danger"></i> Deteksi Bahaya & Risiko</h3>
+                            <div class="risk-metrics-list">
+                                <div class="risk-item">
+                                    <span class="risk-label">Materi Ramadhan Terdeteksi (Seasonal)</span>
+                                    <span class="risk-count badge-count gray" id="stat-ramadhan">0</span>
+                                </div>
+                                <div class="risk-item">
+                                    <span class="risk-label">File Adzan Butuh Review Lokasi/Waktu</span>
+                                    <span class="risk-count badge-count yellow" id="stat-adzan">0</span>
+                                </div>
+                                <div class="risk-item">
+                                    <span class="risk-label">Berkas Musik Dengan Tag / Nama Kotor</span>
+                                    <span class="risk-count badge-count red" id="stat-dirty">0</span>
+                                </div>
+                                <div class="risk-item">
+                                    <span class="risk-label">Event Scheduler Risiko Tinggi</span>
+                                    <span class="risk-count badge-count red" id="stat-high-scheduler">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: DRIVE SCAN ================= -->
+                <section id="tab-scanner" class="tab-pane">
+                    <div class="page-card">
+                        <h3>Pilih Folder Sumber Siaran</h3>
+                        <p class="card-desc">Scan drive stasiun radio secara aman. Proses scan tidak akan merubah atau menghapus file asli Anda.</p>
+                        <div class="scan-input-group">
+                            <input type="text" id="scan-path-input" placeholder="Contoh: D:\RADIO_MUSIC_INPUT_DEMO" value="D:\RADIO_MUSIC_INPUT_DEMO">
+                            <button class="btn btn-primary" onclick="triggerScan()"><i class="fa-solid fa-magnifying-glass"></i> Mulai Scan Pustaka</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: PLAYLISTS ================= -->
+                <section id="tab-playlists" class="tab-pane">
+                    <div class="page-card">
+                        <h3>Hasil Audit Playlist Lama</h3>
+                        <p class="card-desc">Berikut adalah daftar berkas playlist stasiun radio yang terdeteksi memiliki path rusak (Error Code 2) atau mengandung materi seasonal kotor.</p>
+                        
+                        <div class="table-container">
+                            <table class="data-table" id="playlists-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Playlist</th>
+                                        <th>Jalur Playlist</th>
+                                        <th>Total Item</th>
+                                        <th>Missing (Error 2)</th>
+                                        <th>Materi Ramadhan</th>
+                                        <th>Status Kelayakan</th>
+                                        <th>Rekomendasi Tindakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">Silakan jalankan Scan terlebih dahulu untuk melihat hasil audit playlist.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: SCHEDULER ================= -->
+                <section id="tab-scheduler" class="tab-pane">
+                    <div class="page-card">
+                        <h3>Daftar Audit Event Scheduler Lama</h3>
+                        <p class="card-desc">Berdasarkan screenshot RadioBOSS, berikut adalah hasil pemilahan grup scheduler lama yang berisiko merusak rotasi siaran di luar Ramadhan.</p>
+                        
+                        <div class="table-container">
+                            <table class="data-table" id="scheduler-table">
+                                <thead>
+                                    <tr>
+                                        <th>Grup Event</th>
+                                        <th>Nama Event</th>
+                                        <th>Jam Siar</th>
+                                        <th>Perintah</th>
+                                        <th>Target Jalur File</th>
+                                        <th>Risiko</th>
+                                        <th>Status Audit</th>
+                                        <th>Tindakan Rekomendasi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted">Jalankan Scan stasiun radio untuk memuat detail scheduler.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: CART WALL ================= -->
+                <section id="tab-cartwall" class="tab-pane">
+                    <div class="page-card">
+                        <h3>Rencana Penataan Ulang Cart Wall (Tab Kanan)</h3>
+                        <p class="card-desc">Untuk menjaga konsistensi siaran, item jingle program, instrumental bed, spot iklan, dan Ramadhan disarankan dipisahkan ke tab masing-masing.</p>
+                        
+                        <div class="table-container">
+                            <table class="data-table" id="cartwall-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tab Lama</th>
+                                        <th>Slot</th>
+                                        <th>Label Nama</th>
+                                        <th>Durasi</th>
+                                        <th>Tipe Aset</th>
+                                        <th>Rencana Tab Baru</th>
+                                        <th>Tujuan Folder Steril</th>
+                                        <th>Status Migrasi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted">Pindai stasiun radio untuk menyusun rencana penataan cart wall.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: MIGRATION ================= -->
+                <section id="tab-migration" class="tab-pane">
+                    <div class="page-card">
+                        <h3>Penyalinan Aset Ke Folder Steril</h3>
+                        <p class="card-desc">Buat folder steril baru secara otomatis, lalu salin file lagu stasiun radio yang telah disetujui (Approved) secara aman (Dry-Run + Fisik).</p>
+                        
+                        <div class="migration-controls">
+                            <div class="control-box">
+                                <h4>Folder Tujuan Steril Aktif</h4>
+                                <input type="text" id="migration-fresh-root" value="D:\RADIO_SBL_FRESH" readonly>
+                                <button class="btn btn-secondary" onclick="triggerBuildStructure()"><i class="fa-solid fa-folder-plus"></i> Bangun Struktur Direktori</button>
+                            </div>
+                            
+                            <div class="control-box">
+                                <h4>Penyalinan File Approved</h4>
+                                <p class="text-muted">Aksi default adalah **COPY** (menyalin berkas), bukan memindahkan atau menghapusnya. File asli dijamin 100% aman.</p>
+                                <button class="btn btn-primary" onclick="triggerCopyFiles()"><i class="fa-solid fa-circle-play"></i> Mulai Salin Aset</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: REPORTS ================= -->
+                <section id="tab-reports" class="tab-pane">
+                    <div class="page-card">
+                        <h3>Laporan Penataan & Audit Pustaka</h3>
+                        <p class="card-desc">Semua laporan CSV dan panduan konfigurasi manual untuk administrator stasiun radio.</p>
+                        
+                        <div class="actions-button-group gap-15">
+                            <button class="btn btn-secondary" onclick="triggerGenerateReports()"><i class="fa-solid fa-file-export"></i> Ekspor Seluruh Laporan CSV/MD (Asinkron)</button>
+                        </div>
+                        
+                        <div class="reports-list-grid">
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-excel csv-icon"></i>
+                                <div class="file-info">
+                                    <strong>drive_scan_summary.csv</strong>
+                                    <span>Indeks lengkap hasil scan.</span>
+                                </div>
+                            </div>
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-excel csv-icon"></i>
+                                <div class="file-info">
+                                    <strong>playlist_audit.csv</strong>
+                                    <span>Audit missing path dan path rusak.</span>
+                                </div>
+                            </div>
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-excel csv-icon"></i>
+                                <div class="file-info">
+                                    <strong>scheduler_emergency_cleanup.csv</strong>
+                                    <span>Hasil pemilahan event Ramadhan.</span>
+                                </div>
+                            </div>
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-excel csv-icon"></i>
+                                <div class="file-info">
+                                    <strong>cart_wall_rebuild_plan.csv</strong>
+                                    <span>Rencana pemisahan tab jingle/spot.</span>
+                                </div>
+                            </div>
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-excel csv-icon"></i>
+                                <div class="file-info">
+                                    <strong>ramadhan_adzan_report.csv</strong>
+                                    <span>Laporan materi Ramadhan & adzan.</span>
+                                </div>
+                            </div>
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-excel csv-icon"></i>
+                                <div class="file-info">
+                                    <strong>dirty_metadata_report.csv</strong>
+                                    <span>Laporan file bermetadata kotor.</span>
+                                </div>
+                            </div>
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-excel csv-icon"></i>
+                                <div class="file-info">
+                                    <strong>old_source_path_usage.csv</strong>
+                                    <span>Jalur folder mentah yang terpakai.</span>
+                                </div>
+                            </div>
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-lines md-icon"></i>
+                                <div class="file-info">
+                                    <strong>before_after_reset_summary.md</strong>
+                                    <span>Ringkasan perbandingan sebelum/sesudah.</span>
+                                </div>
+                            </div>
+                            <div class="report-file-item">
+                                <i class="fa-solid fa-file-lines md-icon"></i>
+                                <div class="file-info">
+                                    <strong>final_setup_checklist.md</strong>
+                                    <span>Panduan setup akhir manual admin.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: SETTINGS ================= -->
+                <section id="tab-settings" class="tab-pane">
+                    <div class="page-card">
+                        <h3>Pengaturan Aplikasi</h3>
+                        <p class="card-desc">Sesuaikan parameter reset stasiun siaran secara dinamis.</p>
+                        
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label for="setting-fresh-root">Folder Tujuan Steril (Fresh Root)</label>
+                                <input type="text" id="setting-fresh-root" value="D:\RADIO_SBL_FRESH">
+                            </div>
+                            <div class="form-group">
+                                <label for="setting-db-path">Lokasi SQLite Database</label>
+                                <input type="text" id="setting-db-path" value="db/radioboss_fresh_reset.sqlite" readonly>
+                            </div>
+                            <div class="actions-button-group">
+                                <button class="btn btn-primary" onclick="alert('Pengaturan disimpan!')">Simpan Pengaturan</button>
+                                <button class="btn btn-danger" onclick="triggerResetData()"><i class="fa-solid fa-trash"></i> Kosongkan Database SQLite</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+        <i id="toast-icon" class="fa-solid fa-circle-info"></i>
+        <span id="toast-message">Pemberitahuan</span>
+    </div>
+
+    <!-- Custom OBS Industrial JS Logic -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

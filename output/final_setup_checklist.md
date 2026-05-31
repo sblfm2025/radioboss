@@ -12,7 +12,6 @@ Ikuti instruksi langkah-demi-langkah berikut untuk mengaktifkan kembali siaran s
 - [ ] Klik kanan event `berbuka puasa`, `Tips Sahur`, `Imsak`, `Hikmah Puasa`, lalu pilih **Disable** atau **Delete** dari regular scheduler.
 
 ### Langkah 3: Impor Playlist Baru Steril
-- [ ] Cari tab **Playlist** utama di tengah layar RadioBOSS.
 - [ ] Tarik file-file playlist baru dari `D:\RADIO_SBL_FRESH\07_PLAYLIST_BARU\`:
   - `0500_SALAM_SUBUH.m3u8`
   - `0700_SEMANGAT_PAGI.m3u8`

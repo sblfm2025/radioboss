@@ -1,0 +1,43 @@
+{
+  "categories": {
+    "ramadhan_only": {
+      "keywords": ["ramadhan", "imsak", "sahur", "buka puasa", "berbuka puasa", "tarawih", "takbiran", "kultum", "shalawat religi", "religi 2026", "puasa"],
+      "recommended_folder": "05_ADZAN_DAN_MUSIMAN\\RAMADHAN_ONLY",
+      "risk_level": "CRITICAL",
+      "status": "SEASONAL_RAMADHAN_ARCHIVE",
+      "notes": "Materi musiman Ramadhan. Nonaktifkan di luar bulan suci."
+    },
+    "adzan": {
+      "keywords": ["adzan", "subuh", "dzuhur", "ashar", "maghrib", "isya"],
+      "recommended_folder": "05_ADZAN_DAN_MUSIMAN\\ADZAN",
+      "risk_level": "HIGH",
+      "status": "ADZAN_REVIEW",
+      "notes": "Validasi kecocokan jam lokal dan file target adzan."
+    },
+    "ilm_spot": {
+      "keywords": ["spot", "iklan", "ilm", "narkoba", "bullying", "judi online", "judol", "lapor", "stop kekerasan", "layanan masyarakat"],
+      "recommended_folder": "03_ILM",
+      "risk_level": "MEDIUM",
+      "status": "APPROVED",
+      "notes": "Iklan Layanan Masyarakat atau Spot Siaran resmi."
+    },
+    "jingle_sweeper": {
+      "keywords": ["jingle", "sweeper", "station id", "sbl id", "aga kareba", "sbl on stage", "salam subuh", "seputar pinrang"],
+      "recommended_folder": "02_JINGLE_SWEEPER_ID",
+      "risk_level": "LOW",
+      "status": "APPROVED",
+      "notes": "Jingle program stasiun atau station ID reguler."
+    },
+    "bed_music": {
+      "keywords": ["instrumental", "bed", "latar", "saxophone", "bgm", "backsound", "piano"],
+      "recommended_folder": "02_JINGLE_SWEEPER_ID",
+      "risk_level": "LOW",
+      "status": "APPROVED",
+      "notes": "Musik instrumental latar penyiar (Bed Music)."
+    }
+  },
+  "dirty_metadata": {
+    "keywords": ["planetlagu", "stafaband", "gudang lagu", "download lagu", "mp3 juice", "tiktok version", "official music video", "youtube", "www.", "[www.", "lagu baru", "campur", "backup", "mentah"],
+    "notes": "Mendeteksi label watermark download internet atau nama folder tidak rapi."
+  }
+}

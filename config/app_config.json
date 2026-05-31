@@ -1,0 +1,9 @@
+{
+  "freshRoot": "D:\\RADIO_SBL_FRESH",
+  "defaultAction": "copy",
+  "allowDelete": false,
+  "allowOverwrite": false,
+  "scanMode": "maintenance",
+  "databasePath": "db\\radioboss_fresh_reset.sqlite",
+  "defaultScanFolder": "D:\\RADIO_MUSIC_INPUT_DEMO"
+}

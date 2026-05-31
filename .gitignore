@@ -1,0 +1,35 @@
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Databases
+db/*.sqlite
+db/*.db
+
+# Logs
+output/logs/
+*.log
+
+# Outputs & Reports (Laporan Dinamis Hasil Reset)
+output/reports/
+output/playlists/
+output/scheduler_plan/
+output/manifests/
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE/Editor Configs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
